@@ -76,7 +76,7 @@ section{padding:6rem 0}
 .chiffres{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem}
 .chiffres strong{display:block;font:400 clamp(3rem,7vw,5rem)/1 var(--titre);color:var(--neon)}
 .chiffres span{color:var(--doux)}
-.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.grille {grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr))};gap:1.5rem;margin-top:2.5rem}
 .grille.x4{grid-template-columns:repeat(4,1fr)}
 @media (max-width:1000px){.grille.x4{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:620px){.grille.x4{grid-template-columns:1fr}}
