@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S'inscrire – Night Pace</title>
+<meta name="description" content="Crée ton compte gratuit Night Pace et reçois ton premier plan de course à pied.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">Night<b>Pace</b></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="programmes.html">Programmes</a>
+      <a class="btn small magnet" href="inscription.html" aria-current="page">S'inscrire</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-titre wrap">
+    <h1 style="font-size:clamp(3rem,9vw,7rem)">Rejoins la course</h1>
+    <p class="lead">Gratuit, sans carte bancaire. Tu reçois ton premier plan dès l'inscription.</p>
+
+    <form id="inscription">
+      <label>Prénom<input name="prenom" type="text" autocomplete="given-name" required></label>
+      <label>Adresse e-mail<input name="email" type="email" autocomplete="email" required></label>
+      <label>Ton objectif
+        <select name="objectif" required>
+          <option value="">Choisir…</option>
+          <option>Mon premier 5 km</option>
+          <option>Courir 10 km</option>
+          <option>Préparer un semi-marathon</option>
+        </select>
+      </label>
+      <button class="btn magnet" type="submit">Créer mon compte</button>
+    </form>
+    <p class="ok" role="status"></p>
+  </div>
+</main>
+
+<footer><div class="wrap">© 2026 Night Pace. Cours à ton rythme.</div></footer>
+</body>
+</html>
