@@ -192,3 +192,22 @@ summary::after{content:"+";color:var(--neon);font-size:1.5rem;line-height:1;tran
 details[open] summary::after{transform:rotate(45deg)}
 details p{margin-top:.8rem}
 footer a{color:var(--texte)}
+
+.hero h1 .mot > span {
+  display: block;
+  transform: none;
+  animation: none;
+}
+
+.js .hero h1 .mot > span {
+  transform: translate3d(0, 105%, 0);
+  animation: monte .9s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+.js .hero h1 .mot:nth-child(2) > span {
+  animation-delay: .12s;
+}
+
+.js .hero h1 .mot:nth-child(3) > span {
+  animation-delay: .24s;
+}
