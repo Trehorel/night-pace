@@ -181,3 +181,14 @@ html{-webkit-text-size-adjust:100%}
 .grille.prog{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media (max-width:1000px){.grille.prog{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.grille.prog{grid-template-columns:1fr}}
+
+/* FAQ et pied de page */
+.faq{max-width:760px;margin-top:2rem}
+details{border-top:1px solid var(--ligne);padding:1.1rem 0}
+details:last-of-type{border-bottom:1px solid var(--ligne)}
+summary{cursor:pointer;font-weight:800;font-size:1.15rem;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--neon);font-size:1.5rem;line-height:1;transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:.8rem}
+footer a{color:var(--texte)}
