@@ -176,3 +176,8 @@ html{-webkit-text-size-adjust:100%}
   .js .sec::before{transform:translateX(-50%) scaleX(1)}
   .js .sec h2 .mot>span{transform:none}
 }
+
+/* Grille des programmes : 4 colonnes identiques, route et trail */
+.grille.prog{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1000px){.grille.prog{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grille.prog{grid-template-columns:1fr}}
