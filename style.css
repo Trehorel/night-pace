@@ -111,4 +111,7 @@ footer{padding:2.5rem 0;border-top:1px solid var(--ligne);color:var(--doux);font
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
   .js .reveal{opacity:1;transform:none}
   .btn{transform:none!important}
+    .hero h1 .mot>span{transform:none}
+  .hero .lead,.hero .actions,.preuve{opacity:1;transform:none}
+  .streak{display:none}
 }
