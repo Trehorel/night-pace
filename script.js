@@ -3,6 +3,24 @@
   const hasIO = 'IntersectionObserver' in window;
   document.documentElement.classList.add('js');
 
+    // Sections : trait néon + titre qui monte depuis un masque
+  document.querySelectorAll('main > section:not(.hero)').forEach(s => s.classList.add('sec'));
+  document.querySelectorAll('.sec h2').forEach(h => {
+    h.classList.remove('reveal');
+    h.innerHTML = '<span class="mot"><span>' + h.innerHTML + '</span></span>';
+  });
+  const secs = document.querySelectorAll('.sec');
+  if (reduce || !hasIO) {
+    secs.forEach(s => s.classList.add('in'));
+  } else {
+    const so = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); so.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    secs.forEach(s => so.observe(s));
+  }
+
   // Header qui se compacte (scroll passif + une seule mise à jour par frame)
   const header = document.querySelector('.site-header');
   let ticking = false;
