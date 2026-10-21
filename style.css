@@ -104,8 +104,6 @@ footer{padding:2.5rem 0;border-top:1px solid var(--ligne);color:var(--doux);font
 .js .reveal{opacity:0;transform:translate3d(0,28px,0);transition:opacity .7s ease var(--d,0ms),transform .7s cubic-bezier(.2,.8,.2,1) var(--d,0ms);will-change:opacity,transform}
 .js .reveal.in{opacity:1;transform:none}
 
-@media (max-width:620px){nav a:not(.btn){display:none}section{padding:4rem 0}}
-
 /* Animation de chaque section */
 .js .sec{position:relative}
 .js .sec::before{content:"";position:absolute;top:0;left:50%;width:min(1120px,100% - 2.5rem);height:2px;background:var(--neon);transform:translateX(-50%) scaleX(0);transform-origin:left center;transition:transform 1.1s cubic-bezier(.2,.8,.2,1);pointer-events:none}
@@ -113,6 +111,56 @@ footer{padding:2.5rem 0;border-top:1px solid var(--ligne);color:var(--doux);font
 .js .sec h2 .mot{display:block;overflow:hidden;padding-bottom:.06em}
 .js .sec h2 .mot>span{display:block;transform:translate3d(0,105%,0);transition:transform .9s cubic-bezier(.2,.8,.2,1) .15s}
 .js .sec.in h2 .mot>span{transform:none}
+
+/* Mobile */
+html{-webkit-text-size-adjust:100%}
+
+@media (hover:none){
+  .btn:hover{background:var(--neon);color:var(--nuit)}
+  .btn.ghost:hover{background:transparent;color:var(--texte);border-color:var(--ligne)}
+}
+
+@media (max-width:620px){
+  body{font-size:1.125rem;line-height:1.7}
+  p{color:#b8beca}
+  .lead{font-size:1.25rem;line-height:1.6;color:var(--texte)}
+  section{padding:3.5rem 0}
+  .page-titre{padding:7rem 0 2rem}
+
+  /* Header */
+  .site-header{padding:1rem 0}
+  .logo{font-size:1.5rem}
+  nav{gap:1rem}
+  nav a[href="index.html"]{display:none}
+  nav a:not(.btn){font-size:1rem}
+  .btn.small{min-height:44px;display:inline-flex;align-items:center;font-size:1rem}
+
+  /* Titres */
+  .hero{padding:6.5rem 0 3.5rem}
+  .hero h1{font-size:clamp(2.6rem,12vw,4rem)}
+  .hero h1 .ligne2>span{-webkit-text-stroke:1.5px var(--texte)}
+  h2{font-size:clamp(2rem,9.5vw,3rem)}
+  h3{font-size:1.7rem}
+
+  /* Boutons pleine largeur */
+  .actions{flex-direction:column;gap:.8rem}
+  .actions .btn,form .btn{width:100%;min-height:52px;display:inline-flex;align-items:center;justify-content:center}
+  .preuve{font-size:1rem}
+
+  /* Contenus */
+  .chiffres{gap:1.6rem}
+  .chiffres span{font-size:1.1rem}
+  .carte{padding:1.5rem 1.2rem}
+  .carte li{padding:.6rem 0}
+  .etapes li{gap:1rem}
+  .etapes li::before{font-size:2.4rem;min-width:1.8rem}
+  .etapes span{font-size:1.05rem}
+
+  /* Formulaire */
+  form{gap:1.4rem}
+  input,select{padding:1rem;font-size:1.125rem;min-height:52px}
+  footer{font-size:1rem}
+}
 
 /* Accessibilité : on coupe tout mouvement */
 @media (prefers-reduced-motion:reduce){
