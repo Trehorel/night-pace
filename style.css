@@ -50,8 +50,25 @@ nav a:not(.btn):hover,nav a[aria-current]{color:var(--texte)}
   0%{transform:translate3d(-6%,-4%,0) rotate(0deg) scale(1)}
   50%{transform:translate3d(5%,3%,0) rotate(8deg) scale(1.12)}
   100%{transform:translate3d(-2%,6%,0) rotate(-6deg) scale(1.05)}}
-.hero h1 span{display:block}
-.hero h1 .ligne2{color:transparent;-webkit-text-stroke:2px var(--texte)}
+.hero h1{font-size:clamp(3rem,10.5vw,8.5rem)}
+.hero h1 .mot{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .mot>span{display:block;transform:translate3d(0,105%,0);animation:monte .9s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 .mot:nth-child(2)>span{animation-delay:.12s}
+.hero h1 .mot:nth-child(3)>span{animation-delay:.24s}
+.hero h1 .ligne2>span{color:transparent;-webkit-text-stroke:2px var(--texte)}
+@keyframes monte{to{transform:none}}
+
+.hero .lead,.hero .actions,.preuve{opacity:0;animation:apparait .8s ease .6s forwards}
+.hero .actions{animation-delay:.8s}
+.preuve{animation-delay:1s;margin-top:1.4rem;font-size:.95rem}
+@keyframes apparait{from{opacity:0;transform:translate3d(0,16px,0)}to{opacity:1;transform:none}}
+
+.streak{position:absolute;left:0;top:62%;width:40%;height:3px;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--neon));
+  box-shadow:0 0 24px 4px rgba(198,255,61,.5);
+  transform:translate3d(-120%,0,0);
+  animation:traine 5s cubic-bezier(.5,0,.2,1) 1.2s infinite}
+@keyframes traine{0%{transform:translate3d(-120%,0,0)}60%,100%{transform:translate3d(320%,0,0)}}
 
 /* Sections */
 section{padding:6rem 0}
