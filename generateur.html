@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon plan – Night Pace</title>
+<meta name="description" content="Crée ton plan d'entraînement personnalisé jusqu'à ta course : distance, séances par semaine et date de course.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+<script src="plan.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">Night<b>Pace</b></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="programmes.html">Programmes</a>
+      <a href="conseils.html">Conseils</a>
+      <a class="btn small magnet" href="generateur.html" aria-current="page">Mon plan</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-titre wrap">
+    <h1 style="font-size:clamp(3rem,9vw,7rem)">Crée ton plan</h1>
+    <p class="lead">Choisis ta course, ton niveau, ton nombre de séances par semaine et la date de ta course. On construit ton programme semaine par semaine, jusqu'au jour J.</p>
+  </div>
+
+  <section style="padding-top:2rem">
+    <div class="wrap">
+      <form id="generateur">
+        <label>Ta course
+          <select name="course" required>
+            <option value="">Choisir…</option>
+            <option value="5">5 km</option>
+            <option value="10">10 km</option>
+            <option value="21">Semi-marathon</option>
+            <option value="42">Marathon</option>
+            <option value="t25">Trail 20-30 km</option>
+            <option value="t50">Trail 40-60 km</option>
+            <option value="u100">Ultra-trail 80 km et plus</option>
+          </select>
+        </label>
+        <label>Ton niveau actuel
+          <select name="niveau" required>
+            <option value="debutant">Débutant : je cours depuis moins de 6 mois</option>
+            <option value="inter" selected>Régulier : je cours 2 à 3 fois par semaine</option>
+            <option value="confirme">Confirmé : 3 fois par semaine ou plus, depuis plus d'un an</option>
+          </select>
+        </label>
+        <label>Séances par semaine
+          <select name="seances" required>
+            <option value="2">2 séances</option>
+            <option value="3" selected>3 séances</option>
+            <option value="4">4 séances</option>
+            <option value="5">5 séances</option>
+            <option value="6">6 séances</option>
+          </select>
+        </label>
+        <label>Date de ta course
+          <input type="date" name="date" required>
+        </label>
+        <button class="btn magnet" type="submit">Générer mon plan</button>
+      </form>
+      <p class="erreur" role="alert"></p>
+      <div id="resultat"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Night Pace. Cours à ton rythme. · <a href="apropos.html">À propos</a></div></footer>
+</body>
+</html>
