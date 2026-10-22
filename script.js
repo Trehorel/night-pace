@@ -3,19 +3,6 @@
   const hasIO = 'IntersectionObserver' in window;
   document.documentElement.classList.add('js');
 
-  // Compteur d'inscriptions (démo : stocké dans le navigateur)
-  // Pour un vrai compteur partagé, remplace lireStats/ecrireStats par des appels à ta base de données.
-  const CLE = 'nightpace-stats';
-  const lireStats = () => {
-    try {
-      const s = JSON.parse(localStorage.getItem(CLE));
-      return { coureurs: +s?.coureurs || 0, km: +s?.km || 0 };
-    } catch { return { coureurs: 0, km: 0 }; }
-  };
-  const ecrireStats = s => { try { localStorage.setItem(CLE, JSON.stringify(s)); } catch {} };
-  const stats = lireStats();
-  document.querySelectorAll('[data-stat]').forEach(el => { el.dataset.count = stats[el.dataset.stat]; });
-
   // Sections : trait néon + titre qui monte depuis un masque
   document.querySelectorAll('main > section:not(.hero)').forEach(s => s.classList.add('sec'));
   document.querySelectorAll('.sec h2').forEach(h => {
@@ -96,23 +83,6 @@
         raf = requestAnimationFrame(() => { btn.style.transform = `translate3d(${x}px,${y}px,0)`; });
       });
       btn.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); btn.style.transform = ''; });
-    });
-  }
-
-  // Formulaire d'inscription : met à jour le compteur de coureurs et de kilomètres
-  const form = document.querySelector('#inscription');
-  if (form) {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const s = lireStats();
-      s.coureurs += 1;
-      s.km = Math.round((s.km + (parseFloat(form.km.value) || 0)) * 10) / 10;
-      ecrireStats(s);
-      const ok = document.querySelector('.ok');
-      ok.textContent = `Bienvenue ${form.prenom.value} ! Tu es le coureur n° ${s.coureurs}. À très vite sur la ligne de départ.`;
-      ok.classList.add('show');
-      form.reset();
-      ok.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     });
   }
 })();
