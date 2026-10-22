@@ -93,13 +93,13 @@
         const x = (e.clientX - r.left - r.width / 2) * 0.3;
         const y = (e.clientY - r.top - r.height / 2) * 0.4;
         cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => { btn.style.transform = translate3d(${x}px,${y}px,0); });
+        raf = requestAnimationFrame(() => { btn.style.transform = `translate3d(${x}px,${y}px,0)`; });
       });
       btn.addEventListener('pointerleave', () => { cancelAnimationFrame(raf); btn.style.transform = ''; });
     });
   }
 
-  // Formulaire d'inscription (démo : aucun envoi serveur)
+  // Formulaire d'inscription : met à jour le compteur de coureurs et de kilomètres
   const form = document.querySelector('#inscription');
   if (form) {
     form.addEventListener('submit', e => {
@@ -109,7 +109,7 @@
       s.km = Math.round((s.km + (parseFloat(form.km.value) || 0)) * 10) / 10;
       ecrireStats(s);
       const ok = document.querySelector('.ok');
-      ok.textContent = Bienvenue ${form.prenom.value} ! Tu es le coureur n° ${s.coureurs}. À très vite sur la ligne de départ.;
+      ok.textContent = `Bienvenue ${form.prenom.value} ! Tu es le coureur n° ${s.coureurs}. À très vite sur la ligne de départ.`;
       ok.classList.add('show');
       form.reset();
       ok.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
