@@ -216,3 +216,13 @@ input[type="date"]{color-scheme:dark}
 .carte.plan-perso{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1rem}
 .carte.plan-perso h3{margin-bottom:0}
 @media (min-width:1001px){.carte.plan-perso{grid-column:span 3}}
+
+/* Impression : pas d'en-tête ni de pied de page du navigateur (adresse, date, titre) */
+@page{margin:0}
+@media print{
+  html,body{margin:0}
+  main > section{padding:0!important}
+  main .wrap{width:100%}
+  #resultat{margin:0;padding:12mm 15mm;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  #resultat .grille{margin-top:1rem}
+}
