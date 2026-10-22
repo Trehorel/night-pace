@@ -94,14 +94,6 @@ section{padding:6rem 0}
 .cta .actions{justify-content:center}
 .page-titre{padding:9rem 0 3rem}
 
-/* Formulaire */
-form{display:grid;gap:1.2rem;max-width:520px;margin-top:2rem}
-label{display:grid;gap:.4rem;font-weight:600}
-input,select{background:var(--asphalte);border:1px solid var(--ligne);border-radius:4px;color:var(--texte);padding:.9rem 1rem;font:inherit}
-input:focus,select:focus{border-color:var(--neon);outline:none;box-shadow:0 0 0 3px rgba(198,255,61,.25)}
-.ok{display:none;border-left:4px solid var(--neon);background:var(--asphalte);padding:1.2rem 1.4rem;max-width:520px;margin-top:2rem}
-.ok.show{display:block}
-
 /* FAQ */
 .faq{max-width:760px;margin-top:2rem}
 details{border-top:1px solid var(--ligne);padding:1.1rem 0}
@@ -159,7 +151,7 @@ footer a{color:var(--texte)}
 
   /* Boutons pleine largeur */
   .actions{flex-direction:column;gap:.8rem}
-  .actions .btn,form .btn{width:100%;min-height:52px;display:inline-flex;align-items:center;justify-content:center}
+  .actions .btn{width:100%;min-height:52px;display:inline-flex;align-items:center;justify-content:center}
   .preuve{font-size:1rem}
 
   /* Contenus */
@@ -170,10 +162,6 @@ footer a{color:var(--texte)}
   .etapes li{gap:1rem}
   .etapes li::before{font-size:2.4rem;min-width:1.8rem}
   .etapes span{font-size:1.05rem}
-
-  /* Formulaire */
-  form{gap:1.4rem}
-  input,select{padding:1rem;font-size:1.125rem;min-height:52px}
   footer{font-size:1rem}
 }
 
