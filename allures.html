@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculateur d'allure – Night Pace</title>
+<meta name="description" content="Calcule ton allure, ta vitesse, tes temps estimés sur d'autres distances et ton tableau de passage.">
+<meta name="theme-color" content="#0c0d10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0d10'/%3E%3Cpath d='M18 48V16l28 32V16' fill='none' stroke='%23c6ff3d' stroke-width='7' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+<script src="allures.js" defer></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="index.html">Night<b>Pace</b></a>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="programmes.html">Programmes</a>
+      <a href="conseils.html">Conseils</a>
+      <a class="btn small magnet" href="generateur.html">Mon plan</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="page-titre wrap">
+    <h1 style="font-size:clamp(3rem,9vw,7rem)">Tes allures</h1>
+    <p class="lead">Indique une distance et un temps : on calcule ton allure, ta vitesse, tes temps estimés sur d'autres distances et ton tableau de passage.</p>
+  </div>
+
+  <section style="padding-top:2rem">
+    <div class="wrap">
+      <form id="allures">
+        <label>Distance
+          <select name="distance" required>
+            <option value="5">5 km</option>
+            <option value="10" selected>10 km</option>
+            <option value="15">15 km</option>
+            <option value="21.0975">Semi-marathon</option>
+            <option value="42.195">Marathon</option>
+            <option value="autre">Autre distance</option>
+          </select>
+        </label>
+        <label id="autre" hidden>Distance en km
+          <input type="number" name="km" min="0.1" max="250" step="any" inputmode="decimal" placeholder="12,5">
+        </label>
+        <div class="temps">
+          <label>Heures<input type="number" name="h" min="0" max="99" inputmode="numeric" placeholder="0"></label>
+          <label>Minutes<input type="number" name="min" min="0" max="59" inputmode="numeric" placeholder="50"></label>
+          <label>Secondes<input type="number" name="s" min="0" max="59" inputmode="numeric" placeholder="0"></label>
+        </div>
+        <button class="btn magnet" type="submit">Calculer</button>
+      </form>
+      <p class="erreur" role="alert"></p>
+      <div id="resultat"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© 2026 Night Pace. Cours à ton rythme. · <a href="allures.html">Calculateur d'allure</a> · <a href="apropos.html">À propos</a></div></footer>
+</body>
+</html>
