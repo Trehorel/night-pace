@@ -211,3 +211,8 @@ input[type="date"]{color-scheme:dark}
   .js .reveal{opacity:1!important;transform:none!important}
   .js .sec::before{display:none}
 }
+
+/* Carte "Ton plan sur mesure" dans la grille des programmes */
+.carte.plan-perso{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1rem}
+.carte.plan-perso h3{margin-bottom:0}
+@media (min-width:1001px){.carte.plan-perso{grid-column:span 3}}
