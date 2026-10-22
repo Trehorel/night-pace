@@ -231,3 +231,15 @@ input[type="date"]{color-scheme:dark}
 .carte.plan-perso{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:1rem}
 .carte.plan-perso h3{margin-bottom:0}
 @media (min-width:1001px){.carte.plan-perso{grid-column:span 3}}
+
+/* Calculateur d'allure */
+[hidden]{display:none!important}
+.temps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.8rem}
+.sous{margin-top:3rem;font-size:1.6rem}
+.defile{overflow-x:auto;margin-top:1rem}
+.tableau{width:100%;border-collapse:collapse;min-width:420px}
+.tableau th,.tableau td{text-align:left;padding:.8rem 1rem;border-bottom:1px solid var(--ligne)}
+.tableau th{color:var(--doux);font-weight:600;font-size:.95rem}
+.tableau td{font-variant-numeric:tabular-nums}
+.tableau tr.ref td{color:var(--neon);font-weight:800}
+@media print{.tableau th,.tableau td{color:#000;border-color:#999}}
