@@ -71,6 +71,39 @@
         <label>Date de ta course
           <input type="date" name="date" required>
         </label>
+
+        <label>Ta référence pour calculer tes allures
+          <select name="reference">
+            <option value="chrono" selected>Un chrono récent sur une distance</option>
+            <option value="vma">Ma VMA (en km/h)</option>
+            <option value="test">Un test de 6 minutes</option>
+            <option value="aucune">Je n'ai pas de référence</option>
+          </select>
+        </label>
+        <div id="bloc-chrono">
+          <label>Distance du chrono
+            <select name="refdist">
+              <option value="5">5 km</option>
+              <option value="10" selected>10 km</option>
+              <option value="15">15 km</option>
+              <option value="21.0975">Semi-marathon</option>
+              <option value="42.195">Marathon</option>
+            </select>
+          </label>
+          <div class="temps">
+            <label>Heures<input type="number" name="rh" min="0" max="9" inputmode="numeric" placeholder="0"></label>
+            <label>Minutes<input type="number" name="rmin" min="0" max="59" inputmode="numeric" placeholder="50"></label>
+            <label>Secondes<input type="number" name="rs" min="0" max="59" inputmode="numeric" placeholder="0"></label>
+          </div>
+        </div>
+        <label id="bloc-vma" hidden>Ta VMA (km/h)
+          <input type="number" name="vma" min="8" max="25" step="0.1" inputmode="decimal" placeholder="15">
+        </label>
+        <label id="bloc-test" hidden>Distance parcourue en 6 minutes (mètres)
+          <input type="number" name="test6" min="800" max="2500" inputmode="numeric" placeholder="1700">
+        </label>
+        <p class="aide">La VMA est la vitesse maximale aérobie. Si tu ne la connais pas, un chrono récent suffit. Tu peux aussi faire un test : après un bon échauffement, cours le plus loin possible pendant 6 minutes (VMA en km/h = distance en mètres ÷ 100).</p>
+
         <button class="btn magnet" type="submit">Générer mon plan</button>
       </form>
       <p class="erreur" role="alert"></p>
