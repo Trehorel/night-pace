@@ -8,30 +8,31 @@
 
   // pic : sortie longue maximale (min) · dep : sortie longue de départ selon le niveau (min)
   // min : semaines conseillées · taper : semaines d'affûtage (course comprise) · cap : endurance max (min)
-  // q : séances de qualité [phase début, phase milieu, phase pic], 2 variantes par phase
+  // km, pct : distance et part de la VMA tenue sur cette distance (route uniquement)
+  // q : séances de qualité [phase début, milieu, pic], 2 variantes par phase
   // lb : variante de sortie longue avec blocs · btb : week-ends enchaînés possibles
   const COURSES = {
-    '5': { nom: '5 km', pic: 60, dep: [25, 35, 45], min: 6, taper: 1, cap: 40,
+    '5': { nom: '5 km', km: 5, pct: 0.94, pic: 60, dep: [25, 35, 45], min: 6, taper: 1, cap: 40,
       q: [['Fartlek : 6 × 1 min allure vive, 1 min 30 de trot', 'Pyramide : 1-2-3-2-1 min allure soutenue, récupération 1 min 30'],
           ['Intervalles : 6 × 3 min allure soutenue, récupération 2 min', '8 × 2 min allure 5 km, récupération 1 min 30'],
           ['8 × 400 m allure 5 km, récupération 1 min 30', '5 × 800 m allure 5 km, récupération 2 min']],
       lb: 'dont 4 × 3 min un peu plus vite' },
-    '10': { nom: '10 km', pic: 75, dep: [30, 40, 55], min: 6, taper: 1, cap: 55,
+    '10': { nom: '10 km', km: 10, pct: 0.90, pic: 75, dep: [30, 40, 55], min: 6, taper: 1, cap: 55,
       q: [['Fartlek : 8 × 1 min allure vive, 1 min 30 de trot', 'Pyramide : 1-2-3-4-3-2-1 min allure soutenue, récupération 1 min 30'],
-          ['Tempo : 2 × 10 min allure soutenue, récupération 3 min', '6 × 3 min allure 10 km, récupération 2 min'],
+          ['Tempo : 2 × 10 min allure seuil, récupération 3 min', '6 × 3 min allure 10 km, récupération 2 min'],
           ['5 × 1 000 m allure 10 km, récupération 2 min', '3 × 8 min allure 10 km, récupération 3 min']],
       lb: 'dont 3 × 8 min à allure soutenue' },
-    '15': { nom: '15 km', pic: 90, dep: [30, 45, 60], min: 8, taper: 1, cap: 60,
+    '15': { nom: '15 km', km: 15, pct: 0.87, pic: 90, dep: [30, 45, 60], min: 8, taper: 1, cap: 60,
       q: [['Fartlek : 8 × 2 min allure vive, 2 min de trot', 'Pyramide : 2-3-4-3-2 min allure soutenue, récupération 2 min'],
           ['Tempo : 2 × 12 min allure seuil, récupération 3 min', '6 × 4 min allure soutenue, récupération 2 min'],
           ['4 × 2 000 m allure 15 km, récupération 2 min 30', '3 × 10 min allure 15 km, récupération 3 min']],
       lb: 'dont 2 × 15 min à allure soutenue' },
-    '21': { nom: 'Semi-marathon', pic: 115, dep: [40, 55, 75], min: 8, taper: 2, cap: 70,
+    '21': { nom: 'Semi-marathon', km: 21.0975, pct: 0.84, pic: 115, dep: [40, 55, 75], min: 8, taper: 2, cap: 70,
       q: [['Fartlek : 8 × 2 min allure vive, 2 min de trot', 'Pyramide : 2-3-4-3-2 min allure soutenue, récupération 2 min'],
           ['Tempo : 2 × 12 min allure seuil, récupération 3 min', '20 min continues à allure tempo'],
           ['3 × 10 min à allure semi, récupération 3 min', '2 × 15 min à allure semi, récupération 3 min']],
       lb: 'dont 2 × 20 min à allure semi' },
-    '42': { nom: 'Marathon', pic: 180, dep: [60, 80, 100], min: 12, taper: 3, cap: 90,
+    '42': { nom: 'Marathon', km: 42.195, pct: 0.78, pic: 180, dep: [60, 80, 100], min: 12, taper: 3, cap: 90,
       q: [['Fartlek : 8 × 2 min allure vive, 2 min de trot', 'Pyramide : 2-3-4-3-2 min allure soutenue, récupération 2 min'],
           ['Tempo : 2 × 15 min à allure marathon, récupération 4 min', '30 min continues à allure marathon'],
           ['2 × 20 min à allure marathon, récupération 4 min', '3 × 4 km à allure marathon, récupération 2 min']],
@@ -57,6 +58,27 @@
           ['Côtes : 4 × 10 min en côte, marche active dans les pentes', 'Côtes : 3 × 15 min en côte, marche active dans les pentes']],
       lb: 'à allure ultra, avec marche active dans les pentes' }
   };
+
+  // Part de la VMA tenue selon la distance d'un chrono de référence
+  const PCT_REF = { '5': 0.94, '10': 0.90, '15': 0.87, '21.0975': 0.84, '42.195': 0.78 };
+
+  // Zones d'allure en part de la VMA (une valeur = allure précise, deux = fourchette)
+  const ZONES = {
+    'allure facile': [0.65, 0.75], 'très facile': [0.60, 0.70], 'allure vive': [1],
+    'allure soutenue': [0.90], 'allure 5 km': [0.94], 'allure 10 km': [0.90], 'allure 15 km': [0.87],
+    'allure semi': [0.84], 'allure marathon': [0.78], 'allure seuil': [0.87], 'allure tempo': [0.87]
+  };
+  const ZONES_TABLE = [
+    ['Footing très facile', [0.60, 0.70]],
+    ['Endurance facile', [0.65, 0.75]],
+    ['Allure marathon', [0.78]],
+    ['Allure semi-marathon', [0.84]],
+    ['Seuil / tempo', [0.87]],
+    ['Allure 10 km', [0.90]],
+    ['Allure 5 km', [0.94]],
+    ['Allure VMA', [1]]
+  ];
+  const REGEX_ALLURE = /allure (?:facile|vive|soutenue|5 km|10 km|15 km|semi|marathon|seuil|tempo|course)|très facile/g;
 
   // E = endurance, Q = qualité, V = variété, F = footing, C = cross-training, L = sortie longue
   const ORDRE = {
@@ -101,11 +123,19 @@
 
   const pick = (arr, i) => arr[i % arr.length];
   const r5 = m => Math.round(m / 5) * 5;
+  const deux = n => String(n).padStart(2, '0');
   function fmt(m) {
     const h = Math.floor(m / 60), r = m % 60;
     if (!h) return `${m} min`;
-    return r ? `${h} h ${String(r).padStart(2, '0')}` : `${h} h`;
+    return r ? `${h} h ${deux(r)}` : `${h} h`;
   }
+  const duree = sec => {
+    const s = Math.round(sec);
+    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), r = s % 60;
+    return h ? `${h} h ${deux(m)} min ${deux(r)} s` : `${m} min ${deux(r)} s`;
+  };
+  const mmss = sec => { const r = Math.round(sec); return `${Math.floor(r / 60)}:${deux(r % 60)}`; };
+  const nombre = x => x.toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
   const court = d => d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
   const complet = d => d.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const decaler = (d, jours) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + jours);
@@ -113,6 +143,29 @@
   const aujourdhui = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
 
   form.date.min = iso(decaler(aujourdhui(), 14));
+
+  // Affiche seulement le bloc de la référence choisie
+  const blocs = {
+    chrono: document.querySelector('#bloc-chrono'),
+    vma: document.querySelector('#bloc-vma'),
+    test: document.querySelector('#bloc-test')
+  };
+  const majReference = () => {
+    Object.keys(blocs).forEach(k => { blocs[k].hidden = k !== form.reference.value; });
+  };
+  form.reference.addEventListener('change', majReference);
+  majReference();
+
+  // Calcule la VMA selon la référence choisie
+  const lireReference = () => {
+    const mode = form.reference.value;
+    if (mode === 'aucune') return { vma: null };
+    if (mode === 'vma') return { vma: parseFloat(form.vma.value), origine: 'saisie' };
+    if (mode === 'test') return { vma: parseFloat(form.test6.value) / 100, origine: 'calculée avec ton test de 6 minutes' };
+    const d = parseFloat(form.refdist.value);
+    const t = (+form.rh.value || 0) * 3600 + (+form.rmin.value || 0) * 60 + (+form.rs.value || 0);
+    return { vma: t > 0 ? (d / (t / 3600)) / PCT_REF[form.refdist.value] : NaN, origine: 'estimée à partir de ton chrono' };
+  };
 
   form.addEventListener('submit', e => {
     e.preventDefault();
@@ -132,6 +185,25 @@
       erreur.textContent = 'Choisis une date de course située dans au moins 2 semaines.';
       return;
     }
+
+    const ref = lireReference();
+    const vma = ref.vma;
+    if (vma !== null && !(vma >= 8 && vma <= 25)) {
+      erreur.textContent = 'Renseigne ta référence avec des valeurs réalistes (une VMA comprise entre 8 et 25 km/h).';
+      return;
+    }
+
+    // Allures en min/km et vitesses en km/h selon la VMA
+    const plage = z => z.length === 1
+      ? `${mmss(3600 / (vma * z[0]))} /km`
+      : `${mmss(3600 / (vma * z[1]))}–${mmss(3600 / (vma * z[0]))} /km`;
+    const vitesse = z => z.length === 1
+      ? `${nombre(vma * z[0])} km/h`
+      : `${nombre(vma * z[0])}–${nombre(vma * z[1])} km/h`;
+    // Ajoute l'allure chiffrée après chaque mention d'allure (route uniquement)
+    const annoter = txt => (vma && !c.trail)
+      ? txt.replace(REGEX_ALLURE, mot => `${mot} (≈ ${plage(mot === 'allure course' ? [c.pct] : ZONES[mot])})`)
+      : txt;
 
     const total = Math.ceil(jours / 7);          // semaines jusqu'à la course
     const n = Math.min(total, 30);               // semaines affichées (30 maximum)
@@ -157,7 +229,8 @@
         lignes = [];
         if (nb >= 1) lignes.push(['Footing', `${fmt(courte)} à allure facile, avec 3 accélérations de 15 s`]);
         if (nb >= 2) lignes.push(['Veille de course', `Footing de 15 min et mobilité. ${c.trail ? 'Prépare ton sac et ton matériel obligatoire.' : 'Prépare ta tenue et ton ravitaillement.'}`]);
-        lignes.push(['Jour de course', `${c.nom}, le ${complet(course)}`]);
+        const objectif = (vma && c.pct) ? ` Objectif estimé : ${duree(c.km / (vma * c.pct) * 3600)}, à ${mmss(3600 / (vma * c.pct))} /km.` : '';
+        lignes.push(['Jour de course', `${c.nom}, le ${complet(course)}.${objectif}`]);
       } else {
         let L;
         if (type === 'affutage') {
@@ -185,6 +258,7 @@
           ? (v === 1 ? ', sur terrain technique' : bloc ? `, ${c.lb}` : ', sur chemin à allure régulière')
           : (v === 1 ? ' à allure facile, en accélérant sur le dernier quart' : bloc ? ` ${c.lb}` : ' à allure facile');
         const dp = c.trail ? `, environ ${Math.round(c.dplus * L / c.pic / 50) * 50} m de D+` : '';
+        const kmL = (vma && !c.trail) ? ` (environ ${Math.round(L / 60 * vma * 0.70)} km)` : '';
         const nut = c.pic >= 240 && L >= 180 ? ', en testant ta nutrition' : '';
         const btb = c.btb && seances >= 4 && type === 'montee' && p >= 0.4 && i % 2 === 1;
 
@@ -194,7 +268,7 @@
           V: type === 'affutage' ? ['Footing', `${fmt(F)} très facile`] : ['Variété', pick(c.trail ? V_TRAIL : V_ROUTE, i)(E)],
           F: ['Footing', `${fmt(F)} très facile`],
           C: ['Cross-training', type === 'affutage' ? 'Mobilité et gainage : 20 min' : pick(C_POOL, i)],
-          L: ['Sortie longue', `${fmt(L)}${dp}${suffixe}${nut}`]
+          L: ['Sortie longue', `${fmt(L)}${kmL}${dp}${suffixe}${nut}`]
         };
         const ordre = btb ? ORDRE[seances].filter(k => k !== 'F') : ORDRE[seances];
         lignes = ordre.flatMap(k => (k === 'L' && btb)
@@ -202,6 +276,7 @@
           : [BLOCS[k]]);
       }
 
+      lignes = lignes.map(([t, x]) => [t, annoter(x)]);
       cartes.push(`<article class="carte semaine ${type}"><h3>Semaine ${i + 1}</h3><p class="dates">${court(debut)} – ${court(fin)}</p><span class="badge">${ETIQUETTES[type]}</span><ul>${lignes.map(([t, x]) => `<li><b>${t}</b> : ${x}</li>`).join('')}</ul></article>`);
     }
 
@@ -211,12 +286,24 @@
     if (niveau === 'debutant' && ['42', 't50', 'u100'].includes(cle)) alertes.push('Cette distance est ambitieuse pour un débutant : prévois plus de temps de préparation et demande un avis médical.');
     if (niveau === 'debutant' && ['5', '10'].includes(cle)) alertes.push('Si tu ne cours pas encore 20 minutes d\'affilée, commence par le programme « Premier 5 km » (alternance marche et course) sur la page <a href="programmes.html">Programmes</a>.');
     if (['42', 'u100'].includes(cle)) alertes.push('Un bilan médical est vivement recommandé avant de préparer cette distance.');
+    if (vma === null) alertes.push('Sans référence, le plan ne contient pas d\'allures chiffrées. Pour les obtenir, indique un chrono récent, ta VMA ou le résultat d\'un test de 6 minutes.');
+    if (vma !== null && ref.origine === 'estimée à partir de ton chrono') alertes.push('Ta VMA est estimée à partir de ton chrono avec des rapports moyens entre vitesse de course et VMA : c\'est une approximation. Un test de 6 minutes ou un chrono fait à fond la rend plus fiable.');
+    if (vma !== null && c.trail) alertes.push('En trail, les allures du tableau ne valent que sur le plat. En côte et sur terrain technique, cours à l\'effort : les séances ne sont donc pas chiffrées.');
+
+    const tableZones = vma ? `
+      <h3 class="sous">Tes allures de référence</h3>
+      <div class="defile"><table class="tableau">
+        <thead><tr><th>Zone</th><th>% de VMA</th><th>Allure</th><th>Vitesse</th></tr></thead>
+        <tbody>${ZONES_TABLE.map(([nom, z]) => `<tr><td>${nom}</td><td>${z.length === 1 ? Math.round(z[0] * 100) : `${Math.round(z[0] * 100)}–${Math.round(z[1] * 100)}`} %</td><td>${plage(z)}</td><td>${vitesse(z)}</td></tr>`).join('')}</tbody>
+      </table></div>` : '';
 
     sortie.innerHTML = `
       <h2>Ton plan</h2>
-      <p class="resume">${c.nom}, ${n} semaines, ${seances} séances par semaine, jusqu'au ${complet(course)}. Sortie longue maximale : ${fmt(Math.max(20, r5(pic)))}, en semaine ${B}.</p>
+      <p class="resume">${c.nom}, ${n} semaines, ${seances} séances par semaine, jusqu'au ${complet(course)}. Sortie longue maximale : ${fmt(Math.max(20, r5(pic)))}, en semaine ${B}.${vma ? ` Ta VMA : ${nombre(vma)} km/h (${ref.origine}).` : ''}</p>
       ${alertes.map(t => `<p class="alerte">${t}</p>`).join('')}
-      <p>Chaque semaine commence à la date indiquée. Garde la sortie longue pour la fin de semaine et laisse au moins un jour de repos entre deux séances intenses. « Allure facile » veut dire que tu peux parler en courant. Ces durées sont des repères généraux, pas un avis médical : adapte-les à tes sensations et arrête-toi en cas de douleur.</p>
+      ${tableZones}
+      <h3 class="sous">Ton plan semaine par semaine</h3>
+      <p>Chaque semaine commence à la date indiquée. Garde la sortie longue pour la fin de semaine et laisse au moins un jour de repos entre deux séances intenses. « Allure facile » veut dire que tu peux parler en courant. Ces durées et ces allures sont des repères généraux, pas un avis médical : adapte-les à tes sensations et arrête-toi en cas de douleur.</p>
       <div class="grille">${cartes.join('')}</div>
       <div class="actions outils"><button class="btn ghost" type="button" id="imprimer">Imprimer ou enregistrer en PDF</button></div>`;
 
